@@ -16,21 +16,18 @@ import 'package:seller/views/login/login_page.dart';
 void main() {
   runApp(MultiProvider(
     providers: [
-      ChangeNotifierProvider<StoreProvider>.value(
-        value: StoreProvider()
-      )
+      ChangeNotifierProvider<StoreProvider>.value(value: StoreProvider())
     ],
     child: MyApp(),
   ));
   if (Platform.isAndroid) {
     SystemUiOverlayStyle systemUiOverlayStyle =
-    SystemUiOverlayStyle(statusBarColor: Colors.transparent);
+        SystemUiOverlayStyle(statusBarColor: Colors.transparent);
     SystemChrome.setSystemUIOverlayStyle(systemUiOverlayStyle);
   }
 }
 
 class MyApp extends StatelessWidget {
-
   MyApp() {
     requestPermission();
   }
@@ -40,31 +37,26 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'ibuybuy商家版',
       theme: ThemeData(
-        // primarySwatch: Colors.blue,
-        primaryColor: Colours.app_main,
-        scaffoldBackgroundColor: Colors.white,
-        appBarTheme: AppBarTheme(
-          elevation: 0,
-          iconTheme: IconThemeData(color: Colors.white),
-          textTheme: TextTheme(
-            title: TextStyle(
+          // primarySwatch: Colors.blue,
+          primaryColor: Colours.app_main,
+          scaffoldBackgroundColor: Colors.white,
+          appBarTheme: AppBarTheme(
+            elevation: 0,
+            iconTheme: IconThemeData(color: Colors.white),
+            titleTextStyle: TextStyle(
               color: Colors.white,
               fontSize: 16.0,
             ),
           ),
-        ),
-        textTheme: TextTheme(subhead: TextStyle(textBaseline: TextBaseline.alphabetic))
-      ),
+          textTheme: TextTheme(
+              subtitle1: TextStyle(textBaseline: TextBaseline.alphabetic))),
       home: SplashPage(),
       localizationsDelegates: [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      supportedLocales: const [
-        Locale('zh', 'CH'),
-        Locale('en', 'US')
-      ],
+      supportedLocales: const [Locale('zh', 'CH'), Locale('en', 'US')],
       routes: {
         'login': (context) {
           return LoginPage();
@@ -76,6 +68,11 @@ class MyApp extends StatelessWidget {
 
 Future requestPermission() async {
   // 申请权限
-  Map<PermissionGroup, PermissionStatus> permissions = await PermissionHandler().requestPermissions([PermissionGroup.storage, PermissionGroup.contacts, PermissionGroup.location]);
+  Map<PermissionGroup, PermissionStatus> permissions = await PermissionHandler()
+      .requestPermissions([
+    PermissionGroup.storage,
+    PermissionGroup.contacts,
+    PermissionGroup.location
+  ]);
   print(permissions);
 }

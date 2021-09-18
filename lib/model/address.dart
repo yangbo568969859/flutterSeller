@@ -23,7 +23,8 @@ class AddressData {
 
   AddressData.fromJson(Map<String, dynamic> json) {
     if (json['addresses'] != null) {
-      addresses = new List<Addresses>();
+      // addresses = new List<Addresses>();
+      addresses = [];
       json['addresses'].forEach((v) {
         addresses.add(new Addresses.fromJson(v));
       });
@@ -147,14 +148,15 @@ class AddressType {
   }
 }
 
-
 class AddressDetailModel {
   AddressDetailDataModel data;
 
   AddressDetailModel({this.data});
 
   AddressDetailModel.fromJson(Map<String, dynamic> json) {
-    data = json['data'] != null ? new AddressDetailDataModel.fromJson(json['data']) : null;
+    data = json['data'] != null
+        ? new AddressDetailDataModel.fromJson(json['data'])
+        : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -249,7 +251,9 @@ class AddressDetailDataModel {
 
   AddressDetailDataModel.fromJson(Map<String, dynamic> json) {
     code = json['code'];
-    data = json['data'] != null ? new AddressDataList.fromJson(json['data']) : null;
+    data = json['data'] != null
+        ? new AddressDataList.fromJson(json['data'])
+        : null;
     message = json['message'];
     subCode = json['sub_code'];
     subMsg = json['sub_msg'];

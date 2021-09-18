@@ -12,7 +12,8 @@ class _WechatCardState extends State<WechatCard> {
   TextEditingController _nameController = TextEditingController();
   final FocusNode _nodeText1 = FocusNode();
 
-  String wechatImage = 'https://img.aqsea.com/wl/other/20190626181358451-1847918077.jpg';
+  String wechatImage =
+      'https://img.aqsea.com/wl/other/20190626181358451-1847918077.jpg';
   String wechatNick = 'Chloe~';
 
   @override
@@ -29,11 +30,9 @@ class _WechatCardState extends State<WechatCard> {
         title: Text('微信名片'),
         backgroundColor: Colors.white,
         iconTheme: IconThemeData(color: Colors.black),
-        textTheme: TextTheme(
-          title: TextStyle(
-            color: Colors.black,
-            fontSize: 16.0,
-          ),
+        titleTextStyle: TextStyle(
+          color: Colors.black,
+          fontSize: 16.0,
         ),
         centerTitle: true,
         actions: <Widget>[
@@ -44,7 +43,11 @@ class _WechatCardState extends State<WechatCard> {
             child: Container(
               width: 64,
               alignment: Alignment.center,
-              child: Text('完成', style: TextStyle(color: Color(0xFF3233F3), fontSize: 13, fontWeight: FontWeight.bold)),
+              child: Text('完成',
+                  style: TextStyle(
+                      color: Color(0xFF3233F3),
+                      fontSize: 13,
+                      fontWeight: FontWeight.bold)),
             ),
           )
         ],
@@ -56,7 +59,8 @@ class _WechatCardState extends State<WechatCard> {
             Container(
               alignment: Alignment.centerLeft,
               height: 40,
-              child: Text('填写微信号', style: TextStyle(fontWeight: FontWeight.bold)),
+              child:
+                  Text('填写微信号', style: TextStyle(fontWeight: FontWeight.bold)),
             ),
             Container(
               decoration: BoxDecoration(
@@ -68,7 +72,7 @@ class _WechatCardState extends State<WechatCard> {
                       offset: const Offset(0, 10),
                       blurRadius: 10,
                       spreadRadius: 0),
-                ], 
+                ],
               ),
               child: Column(
                 children: <Widget>[
@@ -85,10 +89,8 @@ class _WechatCardState extends State<WechatCard> {
                         alignment: Alignment.centerRight,
                         padding: const EdgeInsets.only(right: 16.0),
                         height: 50,
-                        constraints: BoxConstraints(
-                          minWidth: 75,
-                          minHeight: 50
-                        ),
+                        constraints:
+                            BoxConstraints(minWidth: 75, minHeight: 50),
                         child: Text(
                           '图例',
                           style: TextStyles.textDark14,
@@ -97,7 +99,9 @@ class _WechatCardState extends State<WechatCard> {
                       Expanded(
                         flex: 1,
                         child: Container(
-                          child: Image.network('https://img.aqsea.com/iBuyBuy/wechat/other/wechat-card_example.png', width: double.infinity),
+                          child: Image.network(
+                              'https://img.aqsea.com/iBuyBuy/wechat/other/wechat-card_example.png',
+                              width: double.infinity),
                         ),
                       )
                     ],
@@ -108,7 +112,8 @@ class _WechatCardState extends State<WechatCard> {
             Container(
               alignment: Alignment.centerLeft,
               height: 40,
-              child: Text('上传微信二维码', style: TextStyle(fontWeight: FontWeight.bold)),
+              child: Text('上传微信二维码',
+                  style: TextStyle(fontWeight: FontWeight.bold)),
             ),
             Container(
               height: 220,
@@ -119,26 +124,28 @@ class _WechatCardState extends State<WechatCard> {
                 borderRadius: BorderRadius.circular(6.0),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.03),
-                    offset: const Offset(0, 10),
-                    blurRadius: 10,
-                    spreadRadius: 0),
-                ], 
+                      color: Colors.black.withOpacity(0.03),
+                      offset: const Offset(0, 10),
+                      blurRadius: 10,
+                      spreadRadius: 0),
+                ],
               ),
               child: Container(
-                child: this.wechatImage == '' ? Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Icon(
-                      Icons.add,
-                      size: 44,
-                    ),
-                    Text('上传微信二维码')
-                  ],
-                ) : Padding(
-                  padding: EdgeInsets.all(4),
-                  child: Image.network(wechatImage),
-                ),
+                child: this.wechatImage == ''
+                    ? Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Icon(
+                            Icons.add,
+                            size: 44,
+                          ),
+                          Text('上传微信二维码')
+                        ],
+                      )
+                    : Padding(
+                        padding: EdgeInsets.all(4),
+                        child: Image.network(wechatImage),
+                      ),
               ),
             ),
           ],

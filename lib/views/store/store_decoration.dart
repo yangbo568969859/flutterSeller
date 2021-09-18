@@ -27,12 +27,16 @@ class _StoreDecorationState extends State<StoreDecoration> {
 
   fetchList() async {
     String urls = 'setting.shop.theme.template.page';
-    var res = await httpManager.netFetch(urls, {
-      'page_no': 1,
-      'page_size': 20,
-      'v': '9.0.0',
-      'title': '',
-    }, null, null);
+    var res = await httpManager.netFetch(
+        urls,
+        {
+          'page_no': 1,
+          'page_size': 20,
+          'v': '9.0.0',
+          'title': '',
+        },
+        null,
+        null);
     var response = json.decode(res.toString());
     storeData = StoreTemplate.fromJson(response);
     if (storeData.data != null) {
@@ -45,9 +49,13 @@ class _StoreDecorationState extends State<StoreDecoration> {
 
   fetchStoreInfo() async {
     String urls = 'setting.shop.theme.get';
-    var res = await httpManager.netFetch(urls, {
-      'shop_id': 29,
-    }, null, null);
+    var res = await httpManager.netFetch(
+        urls,
+        {
+          'shop_id': 29,
+        },
+        null,
+        null);
     var response = json.decode(res.toString());
     shopTheme = ShopTheme.fromJson(response);
     if (shopTheme != null) {
@@ -78,172 +86,181 @@ class _StoreDecorationState extends State<StoreDecoration> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFF7F7F7),
-      appBar: AppBar(
-        title: Text('店铺装修'),
-        backgroundColor: Colors.white,
-        iconTheme: IconThemeData(color: Colors.black),
-        textTheme: TextTheme(
-          title: TextStyle(
+        backgroundColor: Color(0xFFF7F7F7),
+        appBar: AppBar(
+          title: Text('店铺装修'),
+          backgroundColor: Colors.white,
+          iconTheme: IconThemeData(color: Colors.black),
+          titleTextStyle: TextStyle(
             color: Colors.black,
             fontSize: 16.0,
           ),
+          centerTitle: true,
+          actions: <Widget>[
+            InkWell(
+              onTap: () {},
+              child: Container(
+                width: 64,
+                alignment: Alignment.center,
+                child: Text('查看店铺',
+                    style: TextStyle(color: Color(0xFF3233F3), fontSize: 12)),
+              ),
+            )
+          ],
         ),
-        centerTitle: true,
-        actions: <Widget>[
-          InkWell(
-            onTap: () {
-            },
-            child: Container(
-              width: 64,
-              alignment: Alignment.center,
-              child: Text('查看店铺', style: TextStyle(color: Color(0xFF3233F3), fontSize: 12)),
-            ),
-          )
-        ],
-      ),
-      body: storeData == null && shopThemeItem == null ? LoadingWidget(_loadingState) : 
-
-      SingleChildScrollView(
-        child: Consumer<StoreProvider>(
-          builder: (_, StoreProvider provider, __) {
-            print(provider.choiceTheme1);
-            provider.setShopTheme(shopTheme.data.data);
-            // Future.delayed(Duration(microseconds: 100)).then((e) {
-            //   provider.setShopTheme(shopTheme.data.data);
-            // });
-            return Column(
-              children: <Widget>[
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 15.0),
-                  alignment: Alignment.centerLeft,
-                  child: Text('选择店铺模版', style: TextStyle(color: Color(0xFF787878)),),
-                  height: 46,
-                ),
-                GridView.builder(
-                  shrinkWrap: true,
-                  padding: EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 15.0),
-                  physics: NeverScrollableScrollPhysics(),
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    childAspectRatio: 0.68,
-                    mainAxisSpacing: 12,
-                    crossAxisSpacing: 8
-                  ),
-                  itemCount: _listData.length,
-                  itemBuilder: (context, index) {
-                    var model = _listData[index];
-                    var isTrue = false;
-                    if (shopThemeItem.shopThemeTemplateId == model.shopThemeTemplateId) {
-                      isTrue = true;
-                    }
-                    return MyCard(
-                      child: InkWell(
-                        onTap: () {
-                          provider.setChoiceTheme(model);
-                          RouteUtil.routeToStoreThemeDetail(context);
-                        },
-                        child: Column(
-                          children: <Widget>[
-                            Expanded(
-                              flex: 1,
-                              child: Container(
-                                child: Image.network(model.themeImg),
+        body: storeData == null && shopThemeItem == null
+            ? LoadingWidget(_loadingState)
+            : SingleChildScrollView(
+                child: Consumer<StoreProvider>(
+                    builder: (_, StoreProvider provider, __) {
+                  print(provider.choiceTheme1);
+                  provider.setShopTheme(shopTheme.data.data);
+                  // Future.delayed(Duration(microseconds: 100)).then((e) {
+                  //   provider.setShopTheme(shopTheme.data.data);
+                  // });
+                  return Column(
+                    children: <Widget>[
+                      Container(
+                        padding: EdgeInsets.symmetric(horizontal: 15.0),
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          '选择店铺模版',
+                          style: TextStyle(color: Color(0xFF787878)),
+                        ),
+                        height: 46,
+                      ),
+                      GridView.builder(
+                        shrinkWrap: true,
+                        padding: EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 15.0),
+                        physics: NeverScrollableScrollPhysics(),
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            childAspectRatio: 0.68,
+                            mainAxisSpacing: 12,
+                            crossAxisSpacing: 8),
+                        itemCount: _listData.length,
+                        itemBuilder: (context, index) {
+                          var model = _listData[index];
+                          var isTrue = false;
+                          if (shopThemeItem.shopThemeTemplateId ==
+                              model.shopThemeTemplateId) {
+                            isTrue = true;
+                          }
+                          return MyCard(
+                            child: InkWell(
+                              onTap: () {
+                                provider.setChoiceTheme(model);
+                                RouteUtil.routeToStoreThemeDetail(context);
+                              },
+                              child: Column(
+                                children: <Widget>[
+                                  Expanded(
+                                    flex: 1,
+                                    child: Container(
+                                      child: Image.network(model.themeImg),
+                                    ),
+                                  ),
+                                  Container(
+                                    child: isTrue == true
+                                        ? Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: <Widget>[
+                                              LoadAssetImage(
+                                                  "icon/selectedv3@2x",
+                                                  width: 16.0,
+                                                  height: 16.0),
+                                              Gaps.hGap8,
+                                              Text('正在使用',
+                                                  style: TextStyle(
+                                                      fontSize: 12,
+                                                      color: Color(0xFF3233F3)))
+                                            ],
+                                          )
+                                        : Text(model.title,
+                                            style: TextStyle(fontSize: 12)),
+                                    height: 40,
+                                    alignment: Alignment.center,
+                                  )
+                                ],
                               ),
                             ),
-                            Container(
-                              child: isTrue == true ? Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: <Widget>[
-                                  LoadAssetImage("icon/selectedv3@2x", width: 16.0, height: 16.0),
-                                  Gaps.hGap8,
-                                  Text('正在使用', style: TextStyle(fontSize: 12, color: Color(0xFF3233F3)))
-                                ],
-                              ) : Text(model.title, style: TextStyle(fontSize: 12)),
-                              height: 40,
-                              alignment: Alignment.center,
-                            )
-                          ],
-                        ),
-                      ),
-                    );
-                  },
-                )
-              ],
-            );
-          }
-        ),
-      )
+                          );
+                        },
+                      )
+                    ],
+                  );
+                }),
+              )
 
-
-      // ChangeNotifierProvider<StoreProvider>(
-      //   builder: (_) => provider,
-      //   child: SingleChildScrollView(
-      //     child: Consumer<StoreProvider>(
-      //       builder: (_, provider, __) {
-      //         return Column(
-      //           children: <Widget>[
-      //             Container(
-      //               padding: EdgeInsets.symmetric(horizontal: 15.0),
-      //               alignment: Alignment.centerLeft,
-      //               child: Text('选择店铺模版', style: TextStyle(color: Color(0xFF787878)),),
-      //               height: 46,
-      //             ),
-      //             GridView.builder(
-      //               shrinkWrap: true,
-      //               padding: EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 15.0),
-      //               physics: NeverScrollableScrollPhysics(),
-      //               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-      //                 crossAxisCount: 2,
-      //                 childAspectRatio: 0.68,
-      //                 mainAxisSpacing: 12,
-      //                 crossAxisSpacing: 8
-      //               ),
-      //               itemCount: _listData.length,
-      //               itemBuilder: (context, index) {
-      //                 var model = _listData[index];
-      //                 var isTrue = false;
-      //                 if (provider.shopTheme.shopThemeTemplateId == model.shopThemeTemplateId) {
-      //                   isTrue = true;
-      //                 }
-      //                 return MyCard(
-      //                   child: InkWell(
-      //                     onTap: () {
-      //                       provider.setChoiceTheme(model);
-      //                       RouteUtil.routeToStoreThemeDetail(context);
-      //                     },
-      //                     child: Column(
-      //                       children: <Widget>[
-      //                         Expanded(
-      //                           flex: 1,
-      //                           child: Container(
-      //                             child: Image.network(model.themeImg),
-      //                           ),
-      //                         ),
-      //                         Container(
-      //                           child: isTrue == true ? Row(
-      //                             mainAxisAlignment: MainAxisAlignment.center,
-      //                             children: <Widget>[
-      //                               LoadAssetImage("icon/selectedv3@2x", width: 16.0, height: 16.0),
-      //                               Gaps.hGap8,
-      //                               Text('正在使用', style: TextStyle(fontSize: 12, color: Color(0xFF3233F3)))
-      //                             ],
-      //                           ) : Text(model.title, style: TextStyle(fontSize: 12)),
-      //                           height: 40,
-      //                           alignment: Alignment.center,
-      //                         )
-      //                       ],
-      //                     ),
-      //                   ),
-      //                 );
-      //               },
-      //             )
-      //           ],
-      //         );
-      //       }
-      //     ),
-      //   )
-      // )
-    );
+        // ChangeNotifierProvider<StoreProvider>(
+        //   builder: (_) => provider,
+        //   child: SingleChildScrollView(
+        //     child: Consumer<StoreProvider>(
+        //       builder: (_, provider, __) {
+        //         return Column(
+        //           children: <Widget>[
+        //             Container(
+        //               padding: EdgeInsets.symmetric(horizontal: 15.0),
+        //               alignment: Alignment.centerLeft,
+        //               child: Text('选择店铺模版', style: TextStyle(color: Color(0xFF787878)),),
+        //               height: 46,
+        //             ),
+        //             GridView.builder(
+        //               shrinkWrap: true,
+        //               padding: EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 15.0),
+        //               physics: NeverScrollableScrollPhysics(),
+        //               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        //                 crossAxisCount: 2,
+        //                 childAspectRatio: 0.68,
+        //                 mainAxisSpacing: 12,
+        //                 crossAxisSpacing: 8
+        //               ),
+        //               itemCount: _listData.length,
+        //               itemBuilder: (context, index) {
+        //                 var model = _listData[index];
+        //                 var isTrue = false;
+        //                 if (provider.shopTheme.shopThemeTemplateId == model.shopThemeTemplateId) {
+        //                   isTrue = true;
+        //                 }
+        //                 return MyCard(
+        //                   child: InkWell(
+        //                     onTap: () {
+        //                       provider.setChoiceTheme(model);
+        //                       RouteUtil.routeToStoreThemeDetail(context);
+        //                     },
+        //                     child: Column(
+        //                       children: <Widget>[
+        //                         Expanded(
+        //                           flex: 1,
+        //                           child: Container(
+        //                             child: Image.network(model.themeImg),
+        //                           ),
+        //                         ),
+        //                         Container(
+        //                           child: isTrue == true ? Row(
+        //                             mainAxisAlignment: MainAxisAlignment.center,
+        //                             children: <Widget>[
+        //                               LoadAssetImage("icon/selectedv3@2x", width: 16.0, height: 16.0),
+        //                               Gaps.hGap8,
+        //                               Text('正在使用', style: TextStyle(fontSize: 12, color: Color(0xFF3233F3)))
+        //                             ],
+        //                           ) : Text(model.title, style: TextStyle(fontSize: 12)),
+        //                           height: 40,
+        //                           alignment: Alignment.center,
+        //                         )
+        //                       ],
+        //                     ),
+        //                   ),
+        //                 );
+        //               },
+        //             )
+        //           ],
+        //         );
+        //       }
+        //     ),
+        //   )
+        // )
+        );
   }
 }
